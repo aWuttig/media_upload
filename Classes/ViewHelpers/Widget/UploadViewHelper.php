@@ -1,6 +1,8 @@
 <?php
 namespace Fab\MediaUpload\ViewHelpers\Widget;
 
+use TYPO3\CMS\Extbase\Annotation as Extbase;
+
 /*
  * This file is part of the Fab/MediaUpload project under GPLv2 or later.
  *
@@ -18,7 +20,7 @@ class UploadViewHelper extends AbstractWidgetViewHelper
 
     /**
      * @var \Fab\MediaUpload\ViewHelpers\Widget\Controller\UploadController
-     * @inject
+     * @Extbase\Inject
      */
     protected $controller;
 

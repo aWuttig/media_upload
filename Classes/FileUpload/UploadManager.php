@@ -15,6 +15,7 @@ use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -388,7 +389,7 @@ class UploadManager
     public function getUploadFolder()
     {
         if ($this->uploadFolder === null) {
-            $this->uploadFolder = PATH_site . self::UPLOAD_FOLDER;
+            $this->uploadFolder = Environment::getPublicPath() . '/' . self::UPLOAD_FOLDER;
 
             $possibleSubFolder = GeneralUtility::_GP('qquuid');
             if (UuidUtility::getInstance()->isValid($possibleSubFolder)) {

@@ -12,6 +12,7 @@ use Fab\Media\Module\MediaModule;
 use Fab\MediaUpload\Dimension;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Fab\MediaUpload\FileUpload\ImageOptimizerInterface;
+use TYPO3\CMS\Core\Core\Environment;
 
 /**
  * Class that optimize an image according to some settings.
@@ -37,8 +38,7 @@ class Resize implements ImageOptimizerInterface
     {
         $this->storage = $storage;
         $this->gifCreator = GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Imaging\\GifBuilder');
-        $this->gifCreator->init();
-        $this->gifCreator->absPrefix = PATH_site;
+        $this->gifCreator->absPrefix = Environment::getPublicPath() . '/';
     }
 
     /**

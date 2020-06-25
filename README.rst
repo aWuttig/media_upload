@@ -97,9 +97,11 @@ Upload Service
 Once files have been uploaded on the Frontend and are placed in a temporary directory, we have to
 to retrieve them and store them into their final location. This code can be used in your controller::
 
+	use TYPO3\CMS\Extbase\Annotation\Inject;
+
 	/**
 	 * @var \Fab\MediaUpload\Service\UploadFileService
-	 * @inject
+	 * @Inject
 	 */
 	protected $uploadFileService;
 

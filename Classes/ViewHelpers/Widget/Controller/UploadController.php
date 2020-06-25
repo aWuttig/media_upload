@@ -12,6 +12,7 @@ use Fab\Media\Utility\PermissionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
  * MediaUpload Controller for widget Upload.
@@ -21,7 +22,7 @@ class UploadController extends AbstractWidgetController
 
     /**
      * @var \Fab\MediaUpload\Service\UploadFileService
-     * @inject
+     * @Extbase\Inject
      */
     protected $uploadFileService;
 

@@ -9,6 +9,7 @@ namespace Fab\MediaUpload\ViewHelpers\Widget\Controller;
  */
 
 use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
  * Show uploaded Controller for widget ShowUploaded.
@@ -18,7 +19,7 @@ class ShowUploadedController extends AbstractWidgetController
 
     /**
      * @var \Fab\MediaUpload\Service\UploadFileService
-     * @inject
+     * @Extbase\Inject
      */
     protected $uploadFileService;
 
