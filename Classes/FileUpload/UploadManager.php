@@ -19,6 +19,7 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use SplFileInfo;
 
 /**
  * Class that encapsulates the file-upload internals
@@ -444,6 +445,28 @@ class UploadManager
     {
         $this->storage = $storage;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStructureOfFiles()
+    {
+        $Directory = new RecursiveDirectoryIterator(GeneralUtility::getFileAbsFileName(UploadManager::UPLOAD_FOLDER));
+        $iterator = new RecursiveIteratorIterator($Directory);
+
+        $counter = 0;
+        $structure = [];
+        /** @var SplFileInfo $file */
+        foreach ($iterator as $file) {
+            if ($file->isFile()) {
+                $counter++;
+                $structure['files'][] = $file->getPath() . DIRECTORY_SEPARATOR . $file->getFilename();
+            }
+        }
+
+        $structure['numberOfFiles'] = $counter;
+        return $structure;
     }
 
 }

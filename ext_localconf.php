@@ -27,7 +27,4 @@ call_user_func(function () {
             'MediaUpload' => 'upload',
         )
     );
-
-// Setting up a script that can be run from the cli_dispatch.phpsh script.
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = \Fab\MediaUpload\Command\TemporaryFileCommandController::class;
 });

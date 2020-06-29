@@ -27,6 +27,7 @@ class UploadFileService
     public function getUploadedFileList($property = '')
     {
         $parameters = GeneralUtility::_GPmerged('tx_mediaupload_pi1');
+
         return empty($parameters['uploadedFiles'][$property]) ? '' : $parameters['uploadedFiles'][$property];
     }
 

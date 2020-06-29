@@ -207,7 +207,7 @@ File Reference Model
 
 We must extend the FileReference for the purpose of ``$fileReference->setFile($file);```. See code above in the Upload Service.
 
-::
+.. code-block:: php
 
 	namespace YourVendor\YourExtensionKey\Domain\Model;
 
@@ -222,34 +222,39 @@ We must extend the FileReference for the purpose of ``$fileReference->setFile($f
 	}
 
 
-TypoScript
-----------
+Persistence and XClasses
+------------------------
 
-Finally we must configure the persistence layer of Extbase.
+Finally we must configure the persistence layer of Extbase in the Classes.php and ext_localconf.php file.
 
 
 ::
 
-	config.tx_extbase {
-		persistence {
-			# Enable this if you need the reference index to be updated
-			updateReferenceIndex = 1
-			classes {
-				YourVendor\YourExtensionKey\Domain\Model\FileReference {
-					mapping {
-						tableName = sys_file_reference
-						columns {
-							uid_local.mapOnProperty = originalFileIdentifier
-						}
-					}
-				}
-			}
-		}
-		objects {
-			TYPO3\CMS\Extbase\Domain\Model\FileReference.className = YourVendor\YourExtensionKey\Domain\Model\FileReference
-		}
-	}
+	<?php
+	declare(strict_types = 1);
 
+	use YourVendor\YourExtensionKey\Domain\Model\FileReference;
+
+	return [
+		FileReference::class => [
+			'tableName' => 'sys_file_reference',
+			'properties' => [
+				'originalFileIdentifier' => [
+					'fieldName' => 'uid_local'
+				],
+			],
+		],
+	];
+
+::
+
+	<?php
+	
+	use TYPO3\CMS\Extbase\Domain\Model\FileReference as ExtbaseFileReference;
+	use YourVendor\YourExtensionKey\Domain\Model\FileReference as YourExtensionKeyFileReference;
+
+	$objectContainer = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class);
+	$objectContainer->registerImplementation(ExtbaseFileReference::class, SitePackageFileReference::class);
 
 Security
 ========
@@ -279,10 +284,10 @@ It could be files are left aside if the user has not finalized the upload.
 The Command can be used via a scheduler task with a low redundancy, once per week as instance::
 
 	# List all temporary files
-	./typo3/cli_dispatch.phpsh extbase temporaryFile:list
+	vendor/bin/typo3 media_upload:temporaryFiles:list
 
 	# Remove them.
-	./typo3/cli_dispatch.phpsh extbase temporaryFile:flush
+	vendor/bin/typo3 media_upload:temporaryFiles:flush
 
 
 Building assets in development
